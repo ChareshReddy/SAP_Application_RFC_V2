@@ -306,19 +306,21 @@ export default function App() {
             }
             style={sapSession.code === 'SELECTED_SESSION_UNAVAILABLE' ? { cursor: 'pointer' } : {}}
           >
-            <span className={`sap-status-dot dot-${(sapSession.status || 'checking').toLowerCase()}`}></span>
-            {sapSession.code === 'SELECTED_SESSION_UNAVAILABLE' ? (
+            <span className={`sap-status-dot dot-${sapSession.connected ? 'connected' : (sapSession.status || 'checking').toLowerCase()}`}></span>
+            {sapSession.mode === 'RFC' && sapSession.connected ? (
+              <span>SAP RFC ONLINE {sapSession.latencyMs ? `(${sapSession.latencyMs}ms)` : ''}</span>
+            ) : sapSession.code === 'SELECTED_SESSION_UNAVAILABLE' ? (
               <span>SELECTED SESSION DISCONNECTED</span>
-            ) : sapSession.status === 'CONNECTED' ? (
+            ) : sapSession.status === 'CONNECTED' || sapSession.status === 'AVAILABLE' ? (
               <span>SAP CONNECTED</span>
             ) : sapSession.status === 'CHECKING' ? (
               <span>CHECKING SAP...</span>
             ) : sapSession.status === 'BUSY' ? (
-              <span>SAP GUI BUSY</span>
+              <span>SAP BUSY</span>
             ) : sapSession.status === 'SERVER_UNAVAILABLE' ? (
               <span>SAP SERVER UNAVAILABLE</span>
             ) : sapSession.status === 'DISCONNECTED' || sapSession.status === 'SESSION_NOT_FOUND' ? (
-              <span>SAP GUI DISCONNECTED</span>
+              <span>SAP DISCONNECTED</span>
             ) : (
               <span>SAP {sapSession.status}</span>
             )}

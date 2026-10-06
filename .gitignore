@@ -32,3 +32,5 @@ Thumbs.db
 # Scratch & temporary investigation files
 scratch/
 scratch_investigation_results.json
+
+backend/.env of RFC project

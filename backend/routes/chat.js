@@ -37,6 +37,13 @@ import {
   getSelectedSapUser,
   getSelectedSapSessionId
 } from '../services/sapGuiClient.js';
+import {
+  rfcReadBom,
+  rfcValidateSourceBom,
+  rfcCreateBom,
+  rfcDeleteBom,
+  rfcCopyBom
+} from '../services/sapRfcClient.js';
 import { checkMaterialMaintenance } from '../services/materialCheck.js';
 import {
   ENTITY_REGISTRY,
@@ -132,25 +139,36 @@ export async function validateCopyBomParameters({
     };
   }
 
-  // Preflight check for SAP session availability
-  const preflight = await ensureSapSession();
-  if (!preflight.ok) {
-    return {
-      valid: false,
-      code: preflight.status === 'SERVER_UNAVAILABLE' ? 'SAP_SERVER_UNAVAILABLE' : (preflight.code || 'SAP_SESSION_NOT_FOUND'),
-      message: preflight.message
-    };
+  const useRfc = process.env.SAP_BOM_MODE !== 'GUI' && process.env.USE_MOCK_SAP !== 'true';
+
+  // Preflight check for SAP session availability (only required for GUI scripting)
+  if (!useRfc) {
+    const preflight = await ensureSapSession();
+    if (!preflight.ok) {
+      return {
+        valid: false,
+        code: preflight.status === 'SERVER_UNAVAILABLE' ? 'SAP_SERVER_UNAVAILABLE' : (preflight.code || 'SAP_SESSION_NOT_FOUND'),
+        message: preflight.message
+      };
+    }
   }
 
-  // Rule 1, 2, 3: Pre-validate SOURCE BOM existence in CS03
+  // Rule 1, 2, 3: Pre-validate SOURCE BOM existence via RFC or CS03
   let sourceCheck;
   try {
-    sourceCheck = await verifyBomInCs03({
-      material: cleanSrcMat,
-      plant: cleanSrcPlant,
-      bomUsage: cleanSrcUsage,
-      alternativeBom: cleanSrcAlt
-    });
+    sourceCheck = useRfc
+      ? await rfcReadBom({
+          material: cleanSrcMat,
+          plant: cleanSrcPlant,
+          bomUsage: cleanSrcUsage,
+          alternativeBom: cleanSrcAlt
+        })
+      : await verifyBomInCs03({
+          material: cleanSrcMat,
+          plant: cleanSrcPlant,
+          bomUsage: cleanSrcUsage,
+          alternativeBom: cleanSrcAlt
+        });
   } catch (err) {
     return {
       valid: false,
@@ -163,11 +181,12 @@ export async function validateCopyBomParameters({
     return {
       valid: false,
       code: sourceCheck.code || 'SOURCE_LOOKUP_UNAVAILABLE',
-      message: sourceCheck.message || 'Cannot verify source BOM: SAP GUI session not available. Workflow stopped.'
+      message: sourceCheck.message || 'Cannot verify source BOM: lookup failed. Workflow stopped.'
     };
   }
 
-  if (!sourceCheck.exists) {
+  const bomExists = sourceCheck.bomExists ?? sourceCheck.exists;
+  if (!bomExists) {
     return {
       valid: false,
       code: 'SOURCE_BOM_NOT_FOUND',
@@ -1248,10 +1267,10 @@ router.post('/', async (req, res) => {
     const schema = getEntitySchema(entityKey);
     const entityLabel = schema ? schema.singularLabel : 'Record';
     const recordId = action.recordId || action.businessPartnerId;
-
     try {
-      // Session Safety Verification for SAP GUI Operations
-      if (['copy_bom', 'delete_bom'].includes(action.type)) {
+      // Session Safety Verification for SAP GUI Operations (only needed when using GUI)
+      const useRfc = process.env.SAP_BOM_MODE !== 'GUI' && process.env.USE_MOCK_SAP !== 'true';
+      if (!useRfc && ['copy_bom', 'delete_bom'].includes(action.type)) {
         const currentSelectedUser = getSelectedSapUser();
         const preflight = await ensureSapSession();
         if (!preflight.ok) {
@@ -1339,80 +1358,126 @@ router.post('/', async (req, res) => {
         executedMessage = `Successfully changed master data for ${entityLabel} ${recordId} in ${actionSystem}.`;
         data = [result.after];
       } else if (action.type === 'copy_bom') {
-        const preflight = await ensureSapSession();
-        if (!preflight.ok) {
-          const err = new Error(`Cannot execute Copy BOM: ${preflight.message}`);
-          err.code = preflight.status === 'SERVER_UNAVAILABLE' ? 'SAP_SERVER_UNAVAILABLE' : (preflight.code || 'SAP_SESSION_NOT_FOUND');
-          throw err;
-        }
-
         const copyParams = action.payload;
 
-        const repairResult = await copyBomHierarchyWithRepair({
-          source: copyParams.source,
-          target: copyParams.target,
-          validFrom: copyParams.target?.validFrom || copyParams.validFrom || '',
-          maxDepth: 5,
-          auditHook: (item, alternative, res) => {
-            auditLogger.logAction({
-              sapUsername: username,
-              entityKey: 'bom',
-              actionType: 'copy_bom',
-              recordId: item.material,
-              businessPartnerId: item.material,
-              beforeValues: res?.before || null,
-              afterValues: res?.after || null,
-              sourcePrompt: item.isMain
-                ? (action.sourcePrompt || `Copy BOM hierarchy ${item.material}`)
-                : `Hierarchy sub-BOM copy (depth ${item.depth}) for main BOM ${copyParams.target?.material}`,
-              actionId: `${action.actionId}_bom_${item.depth}_${item.material}_alt${alternative}`,
-              system: actionSystem,
-              task: item.isMain ? `Main BOM Copy (${item.material})` : `Sub-BOM Copy (${item.material})`,
-              reason: providedReason || null
-            });
+        if (useRfc) {
+          result = await rfcCopyBom({
+            sourceMaterial: copyParams.source?.material || copyParams.sourceMaterial,
+            sourcePlant: copyParams.source?.plant || copyParams.sourcePlant,
+            targetMaterial: copyParams.target?.material || copyParams.targetMaterial,
+            targetPlant: copyParams.target?.plant || copyParams.targetPlant,
+            bomUsage: copyParams.target?.bomUsage || copyParams.bomUsage || '1',
+            sourceAlternative: copyParams.source?.alternativeBom || copyParams.sourceAltBom || '1',
+            targetAlternative: copyParams.target?.alternativeBom || copyParams.targetAltBom || '1'
+          });
+
+          if (!result.success) {
+            const err = new Error(result.message || 'Copy BOM failed via RFC.');
+            err.code = result.code || 'RFC_COPY_FAILED';
+            throw err;
           }
-        });
 
-        const mainRecord = repairResult.mainBom?.after || repairResult.createdBoms[0]?.after || {};
-        result = {
-          success: true,
-          verified: true,
-          status: 'SUCCESS',
-          code: 'BOM_HIERARCHY_COPIED_AND_VERIFIED',
-          message: repairResult.message,
-          after: mainRecord,
-          createdRecords: repairResult.createdBoms.map(b => b.after || b),
-          totalBomsCreated: repairResult.totalBomsCreated,
-          createdBoms: repairResult.createdBoms,
-          hierarchyDepth: repairResult.hierarchyDepth,
-          levelsVerified: repairResult.levelsVerified,
-          verification: repairResult.verification
-        };
+          executedMessage = result.message || `Successfully copied BOM to ${copyParams.target?.material} in plant ${copyParams.target?.plant} via RFC.`;
+          data = [result.after || {
+            material: copyParams.target?.material,
+            plant: copyParams.target?.plant,
+            alternativeBom: copyParams.target?.alternativeBom,
+            bomUsage: copyParams.target?.bomUsage || '1',
+            bomNumber: result.bomNumber,
+            status: 'COPIED_VIA_RFC'
+          }];
+        } else {
+          const preflight = await ensureSapSession();
+          if (!preflight.ok) {
+            const err = new Error(`Cannot execute Copy BOM: ${preflight.message}`);
+            err.code = preflight.status === 'SERVER_UNAVAILABLE' ? 'SAP_SERVER_UNAVAILABLE' : (preflight.code || 'SAP_SESSION_NOT_FOUND');
+            throw err;
+          }
 
-        executedMessage = result.message;
-        data = result.createdRecords;
+          const repairResult = await copyBomHierarchyWithRepair({
+            source: copyParams.source,
+            target: copyParams.target,
+            validFrom: copyParams.target?.validFrom || copyParams.validFrom || '',
+            maxDepth: 5,
+            auditHook: (item, alternative, res) => {
+              auditLogger.logAction({
+                sapUsername: username,
+                entityKey: 'bom',
+                actionType: 'copy_bom',
+                recordId: item.material,
+                businessPartnerId: item.material,
+                beforeValues: res?.before || null,
+                afterValues: res?.after || null,
+                sourcePrompt: item.isMain
+                  ? (action.sourcePrompt || `Copy BOM hierarchy ${item.material}`)
+                  : `Hierarchy sub-BOM copy (depth ${item.depth}) for main BOM ${copyParams.target?.material}`,
+                actionId: `${action.actionId}_bom_${item.depth}_${item.material}_alt${alternative}`,
+                system: actionSystem,
+                task: item.isMain ? `Main BOM Copy (${item.material})` : `Sub-BOM Copy (${item.material})`,
+                reason: providedReason || null
+              });
+            }
+          });
+
+          const mainRecord = repairResult.mainBom?.after || repairResult.createdBoms[0]?.after || {};
+          result = {
+            success: true,
+            verified: true,
+            status: 'SUCCESS',
+            code: 'BOM_HIERARCHY_COPIED_AND_VERIFIED',
+            message: repairResult.message,
+            after: mainRecord,
+            createdRecords: repairResult.createdBoms.map(b => b.after || b),
+            totalBomsCreated: repairResult.totalBomsCreated,
+            createdBoms: repairResult.createdBoms,
+            hierarchyDepth: repairResult.hierarchyDepth,
+            levelsVerified: repairResult.levelsVerified,
+            verification: repairResult.verification
+          };
+
+          executedMessage = result.message;
+          data = result.createdRecords;
+        }
       } else if (action.type === 'delete_bom') {
-        const preflight = await ensureSapSession();
-        if (!preflight.ok) {
-          const err = new Error(`Cannot execute Delete BOM: ${preflight.message}`);
-          err.code = preflight.status === 'SERVER_UNAVAILABLE' ? 'SAP_SERVER_UNAVAILABLE' : (preflight.code || 'SAP_SESSION_NOT_FOUND');
-          throw err;
-        }
+        const useRfc = process.env.SAP_BOM_MODE !== 'GUI' && process.env.USE_MOCK_SAP !== 'true';
         const deleteParams = action.payload;
-        result = await deleteBomViaGui(deleteParams);
-        if (!result.success || result.verified === false) {
-          const err = new Error(result.message || 'Delete BOM failed or could not be verified in SAP GUI.');
-          err.code = result.code || 'GUI_DELETE_FAILED';
-          throw err;
+        if (useRfc) {
+          result = await rfcDeleteBom(deleteParams);
+          if (!result.success) {
+            const err = new Error(result.message || 'Delete BOM failed via RFC.');
+            err.code = result.code || 'RFC_DELETE_FAILED';
+            throw err;
+          }
+          executedMessage = result.message || `Successfully deleted BOM for ${deleteParams.material} in plant ${deleteParams.plant} via RFC.`;
+          data = [result.after || {
+            material: deleteParams.material,
+            plant: deleteParams.plant,
+            alternativeBom: deleteParams.alternativeBom,
+            bomUsage: deleteParams.bomUsage,
+            status: 'DELETED_VIA_RFC'
+          }];
+        } else {
+          const preflight = await ensureSapSession();
+          if (!preflight.ok) {
+            const err = new Error(`Cannot execute Delete BOM: ${preflight.message}`);
+            err.code = preflight.status === 'SERVER_UNAVAILABLE' ? 'SAP_SERVER_UNAVAILABLE' : (preflight.code || 'SAP_SESSION_NOT_FOUND');
+            throw err;
+          }
+          result = await deleteBomViaGui(deleteParams);
+          if (!result.success || result.verified === false) {
+            const err = new Error(result.message || 'Delete BOM failed or could not be verified in SAP GUI.');
+            err.code = result.code || 'GUI_DELETE_FAILED';
+            throw err;
+          }
+          executedMessage = result.message || `Successfully deleted BOM for ${deleteParams.material} in plant ${deleteParams.plant} (Alternative BOM ${deleteParams.alternativeBom || '1'}) via SAP GUI.`;
+          data = [result.after || {
+            material: deleteParams.material,
+            plant: deleteParams.plant,
+            alternativeBom: deleteParams.alternativeBom,
+            bomUsage: deleteParams.bomUsage,
+            status: 'DELETED_AND_VERIFIED_VIA_GUI'
+          }];
         }
-        executedMessage = result.message || `Successfully deleted BOM for ${deleteParams.material} in plant ${deleteParams.plant} (Alternative BOM ${deleteParams.alternativeBom || '1'}) via SAP GUI.`;
-        data = [result.after || {
-          material: deleteParams.material,
-          plant: deleteParams.plant,
-          alternativeBom: deleteParams.alternativeBom,
-          bomUsage: deleteParams.bomUsage,
-          status: 'DELETED_AND_VERIFIED_VIA_GUI'
-        }];
       } else {
         throw new Error(`Unknown action type: ${action.type}`);
       }
@@ -1596,8 +1661,9 @@ router.post('/', async (req, res) => {
       sourcePrompt: message ? message.trim() : summary
     });
 
+    const useRfc = process.env.SAP_BOM_MODE !== 'GUI' && process.env.USE_MOCK_SAP !== 'true';
     return res.status(200).json({
-      reply: `I have prepared a proposal to copy the Bill of Materials. Please review the details below and confirm to execute via SAP GUI CS01:`,
+      reply: `I have prepared a proposal to copy the Bill of Materials. Please review the details below and confirm to execute via ${useRfc ? 'SAP RFC / BAPI' : 'SAP GUI CS01'}:`,
       data: null,
       proposedAction: {
         actionId: pending.actionId,
@@ -1615,8 +1681,8 @@ router.post('/', async (req, res) => {
 
   // Direct handling for structured Delete BOM form submission
   if (actionType === 'delete_bom' && deleteBomParams) {
-    const material = String(deleteBomParams.material || '').trim();
-    const plant = String(deleteBomParams.plant || '').trim();
+    const material = String(deleteBomParams.material || '').trim().toUpperCase();
+    const plant = String(deleteBomParams.plant || '').trim().toUpperCase();
     const alternativeBom = String(deleteBomParams.alternativeBom || '1').trim();
     const bomUsage = String(deleteBomParams.bomUsage || '1').trim();
 
@@ -1631,30 +1697,41 @@ router.post('/', async (req, res) => {
       });
     }
 
-    const preflight = await ensureSapSession();
-    if (!preflight.ok) {
-      return res.status(200).json({
-        reply: `Cannot propose deleting BOM: ${preflight.message}`,
-        data: null,
-        proposedAction: null,
-        entityKey: 'bom',
-        schema: getEntitySchema('bom'),
-        error: true,
-        code: preflight.status === 'SERVER_UNAVAILABLE' ? 'SAP_SERVER_UNAVAILABLE' : (preflight.code || 'SAP_SESSION_NOT_FOUND'),
-        status: preflight.status
-      });
+    const useRfc = process.env.SAP_BOM_MODE !== 'GUI' && process.env.USE_MOCK_SAP !== 'true';
+
+    if (!useRfc) {
+      const preflight = await ensureSapSession();
+      if (!preflight.ok) {
+        return res.status(200).json({
+          reply: `Cannot propose deleting BOM: ${preflight.message}`,
+          data: null,
+          proposedAction: null,
+          entityKey: 'bom',
+          schema: getEntitySchema('bom'),
+          error: true,
+          code: preflight.status === 'SERVER_UNAVAILABLE' ? 'SAP_SERVER_UNAVAILABLE' : (preflight.code || 'SAP_SESSION_NOT_FOUND'),
+          status: preflight.status
+        });
+      }
     }
 
-    const bomCheck = await verifyBomInCs03({
-      material,
-      plant,
-      bomUsage,
-      alternativeBom
-    });
+    const bomCheck = useRfc
+      ? await rfcReadBom({
+          material,
+          plant,
+          bomUsage,
+          alternativeBom
+        })
+      : await verifyBomInCs03({
+          material,
+          plant,
+          bomUsage,
+          alternativeBom
+        });
 
     if (!bomCheck.success) {
       return res.status(200).json({
-        reply: `Cannot verify BOM before deletion: ${bomCheck.message || 'SAP GUI session not available.'} Workflow stopped.`,
+        reply: `Cannot verify BOM before deletion: ${bomCheck.message || 'SAP connection error.'} Workflow stopped.`,
         data: null,
         proposedAction: null,
         entityKey: 'bom',
@@ -1665,10 +1742,12 @@ router.post('/', async (req, res) => {
       });
     }
 
-    if (!bomCheck.exists) {
-      const isAltNotFound = bomCheck.availableAlternatives && !bomCheck.availableAlternatives.includes(alternativeBom);
+    const bomExists = bomCheck.bomExists ?? bomCheck.exists;
+    if (!bomExists) {
+      const alts = bomCheck.availableAlternatives || [];
+      const isAltNotFound = alts.length > 0 && !alts.includes(alternativeBom.padStart(2, '0')) && !alts.includes(alternativeBom);
       const failMsg = isAltNotFound
-        ? `Alternative BOM ${alternativeBom} does not exist.`
+        ? `Alternative BOM ${alternativeBom} does not exist for material ${material} in plant ${plant}. Available alternatives: ${alts.join(', ')}.`
         : (bomCheck.message || `No BOM found for material ${material} in plant ${plant} with usage ${bomUsage}.`);
 
       return res.status(200).json({
@@ -1722,7 +1801,7 @@ router.post('/', async (req, res) => {
     });
 
     return res.status(200).json({
-      reply: `⚠️ Please confirm the permanent deletion of this Bill of Materials. This operation will be executed directly via SAP GUI ZBOM_COPY:`,
+      reply: `⚠️ Please confirm the permanent deletion of this Bill of Materials. This operation will be executed directly via ${useRfc ? 'SAP RFC / BAPI' : 'SAP GUI ZBOM_COPY'}:`,
       data: null,
       proposedAction: {
         actionId: pending.actionId,
@@ -2669,8 +2748,8 @@ router.post('/', async (req, res) => {
           try {
             const deleteIntent = message.match(/(?:delete|remove)\s+(?:a\s+)?(?:BOM|bill\s+of\s+materials)\s+(?:for\s+)?([A-Za-z0-9_-]+)?.*?(?:plant\s+([A-Za-z0-9_-]+))?.*?(?:alt(?:ernative)?\s*(?:BOM)?\s*(\d+))?/i);
 
-            const material = String(toolArgs.material || toolArgs.matnr || deleteIntent?.[1] || '').trim();
-            const plant = String(toolArgs.plant || toolArgs.werks || deleteIntent?.[2] || '').trim();
+            const material = String(toolArgs.material || toolArgs.matnr || deleteIntent?.[1] || '').trim().toUpperCase();
+            const plant = String(toolArgs.plant || toolArgs.werks || deleteIntent?.[2] || '').trim().toUpperCase();
             const alternativeBom = String(toolArgs.alternativeBom || toolArgs.stlal || toolArgs.altBom || deleteIntent?.[3] || '1').trim();
             const bomUsage = String(toolArgs.bomUsage || toolArgs.stlan || '1').trim();
 
@@ -2683,30 +2762,41 @@ router.post('/', async (req, res) => {
               });
             }
 
-            const preflight = await ensureSapSession();
-            if (!preflight.ok) {
-              return res.status(200).json({
-                reply: `Cannot propose deleting BOM: ${preflight.message}`,
-                data: null,
-                proposedAction: null,
-                entityKey: 'bom',
-                schema: getEntitySchema('bom'),
-                error: true,
-                code: preflight.status === 'SERVER_UNAVAILABLE' ? 'SAP_SERVER_UNAVAILABLE' : (preflight.code || 'SAP_SESSION_NOT_FOUND'),
-                status: preflight.status
-              });
+            const useRfc = process.env.SAP_BOM_MODE !== 'GUI' && process.env.USE_MOCK_SAP !== 'true';
+
+            if (!useRfc) {
+              const preflight = await ensureSapSession();
+              if (!preflight.ok) {
+                return res.status(200).json({
+                  reply: `Cannot propose deleting BOM: ${preflight.message}`,
+                  data: null,
+                  proposedAction: null,
+                  entityKey: 'bom',
+                  schema: getEntitySchema('bom'),
+                  error: true,
+                  code: preflight.status === 'SERVER_UNAVAILABLE' ? 'SAP_SERVER_UNAVAILABLE' : (preflight.code || 'SAP_SESSION_NOT_FOUND'),
+                  status: preflight.status
+                });
+              }
             }
 
-            const bomCheck = await verifyBomInCs03({
-              material,
-              plant,
-              bomUsage,
-              alternativeBom
-            });
+            const bomCheck = useRfc
+              ? await rfcReadBom({
+                  material,
+                  plant,
+                  bomUsage,
+                  alternativeBom
+                })
+              : await verifyBomInCs03({
+                  material,
+                  plant,
+                  bomUsage,
+                  alternativeBom
+                });
 
             if (!bomCheck.success) {
               return res.status(200).json({
-                reply: `Cannot verify BOM before deletion: ${bomCheck.message || 'SAP GUI session not available.'} Workflow stopped.`,
+                reply: `Cannot verify BOM before deletion: ${bomCheck.message || 'SAP connection error.'} Workflow stopped.`,
                 data: null,
                 proposedAction: null,
                 entityKey: 'bom',
@@ -2717,10 +2807,12 @@ router.post('/', async (req, res) => {
               });
             }
 
-            if (!bomCheck.exists) {
-              const isAltNotFound = bomCheck.availableAlternatives && !bomCheck.availableAlternatives.includes(alternativeBom);
+            const bomExists = bomCheck.bomExists ?? bomCheck.exists;
+            if (!bomExists) {
+              const alts = bomCheck.availableAlternatives || [];
+              const isAltNotFound = alts.length > 0 && !alts.includes(alternativeBom.padStart(2, '0')) && !alts.includes(alternativeBom);
               const failMsg = isAltNotFound
-                ? `Alternative BOM ${alternativeBom} does not exist.`
+                ? `Alternative BOM ${alternativeBom} does not exist for material ${material} in plant ${plant}. Available alternatives: ${alts.join(', ')}.`
                 : (bomCheck.message || `No BOM found for material ${material} in plant ${plant} with usage ${bomUsage}.`);
 
               return res.status(200).json({
