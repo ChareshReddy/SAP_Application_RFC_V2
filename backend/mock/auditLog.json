@@ -5359,5 +5359,1701 @@
     "sourcePrompt": "Hierarchy sub-BOM copy (depth 3) for main BOM A1BH0214C",
     "actionId": "act_1790679965978_1f51254f_bom_3_H1STPUR0017_alt2",
     "timestamp": "2026-09-29T11:27:37.789Z"
+  },
+  {
+    "logId": "audit_1790760749351_424d6a0b",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "bom",
+    "actionType": "copy_bom",
+    "recordId": "A1BH0214C",
+    "businessPartnerId": "A1BH0214C",
+    "task": "Main BOM Copy (A1BH0214C)",
+    "reason": null,
+    "steps": [
+      "Initiated copy_bom action for bom A1BH0214C",
+      "Human confirmation verified",
+      "Executed copy_bom successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": {
+      "material": "A1BH0214C",
+      "plant": "1012",
+      "bomUsage": "1",
+      "alternativeBom": "7",
+      "validFrom": "30.09.2026",
+      "components": [
+        {
+          "item": "0010",
+          "material": "B1BH0214C",
+          "description": "CUT SOLE BAHAMAS 214",
+          "quantity": "100",
+          "unit": "PAA",
+          "itemCategory": "L",
+          "assembly": true
+        },
+        {
+          "item": "0020",
+          "material": "C1BH0214C",
+          "description": "FIN. STRAP BAHAMAS 214",
+          "quantity": "100",
+          "unit": "PAA",
+          "itemCategory": "L",
+          "assembly": true
+        },
+        {
+          "item": "0030",
+          "material": "11021735",
+          "description": "INK EVA SCREEN PRINTING  BLUE",
+          "quantity": "0.017",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0050",
+          "material": "11021733",
+          "description": "INK EVA SCREEN PRINTING COLOUR RED",
+          "quantity": "0.015",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0070",
+          "material": "11021737",
+          "description": "INK EVA SCREEN PRINTING ORIGINAL YELLOW",
+          "quantity": "0.002",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0080",
+          "material": "11021734",
+          "description": "INK EVA SCREEN PRINTING MIDYELLOW",
+          "quantity": "0.002",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0090",
+          "material": "11021732",
+          "description": "INK EVA SCREEN PRINTING COLOUR GREEN",
+          "quantity": "0.003",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0100",
+          "material": "11022139",
+          "description": "INK EVA SCREEN PRINTING PEVA FLORESCENT",
+          "quantity": "0.001",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0110",
+          "material": "11021686",
+          "description": "SILICONE EMULSION, (20-22% OIL CONTENT)",
+          "quantity": "0.125",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0120",
+          "material": "11022154",
+          "description": "CLEANER 6040",
+          "quantity": "0.100",
+          "unit": "L",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0130",
+          "material": "12000079",
+          "description": "EVA PRIMER",
+          "quantity": "0.220",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0140",
+          "material": "PPBH0001C",
+          "description": "PKG PAIR GRP FOR BAHAMAS CHILD -1",
+          "quantity": "100",
+          "unit": "EA",
+          "itemCategory": "L",
+          "assembly": true
+        },
+        {
+          "item": "0150",
+          "material": "11021698",
+          "description": "REDUCER FARBATONE TP-65",
+          "quantity": "0.090",
+          "unit": "L",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0160",
+          "material": "C1HL0003C",
+          "description": "Fin. Strap Hi Lite 03 C",
+          "quantity": "100",
+          "unit": "PAA",
+          "itemCategory": "L",
+          "assembly": true
+        },
+        {
+          "item": "0170",
+          "material": "11031877",
+          "description": "INK SCREEN PRINTING WHITE - EVA-S- 666",
+          "quantity": "0.018",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0180",
+          "material": "11031874",
+          "description": "INK SCREEN PRINT. EVA-PLUS BLACK-501",
+          "quantity": "0.017",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        }
+      ],
+      "warnings": [],
+      "executionPath": "CROSS_PLANT_DIRECT_ENTRY",
+      "isCrossPlantExistingBom": true,
+      "status": "COPIED_AND_VERIFIED_VIA_GUI"
+    },
+    "sourcePrompt": "Create new BOM for A1BH0214C in plant 1012 (Usage 1) by copying from reference BOM A1BH0214C in plant 1001 (Usage 1)",
+    "actionId": "act_1790760681270_8883bf8d_bom_0_A1BH0214C_alt7",
+    "timestamp": "2026-09-30T09:32:29.351Z"
+  },
+  {
+    "logId": "audit_1790760787104_84a4faf3",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "bom",
+    "actionType": "copy_bom",
+    "recordId": "B1BH0214C",
+    "businessPartnerId": "B1BH0214C",
+    "task": "Sub-BOM Copy (B1BH0214C)",
+    "reason": null,
+    "steps": [
+      "Initiated copy_bom action for bom B1BH0214C",
+      "Human confirmation verified",
+      "Executed copy_bom successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": {
+      "material": "B1BH0214C",
+      "plant": "1012",
+      "bomUsage": "1",
+      "alternativeBom": "10",
+      "validFrom": "30.09.2026",
+      "components": [
+        {
+          "item": "0010",
+          "material": "G1RP50TNB004",
+          "description": "SHEET RPG-50 TAN/BLACK(9-1)",
+          "quantity": "5.000",
+          "unit": "SH",
+          "itemCategory": "L",
+          "assembly": true
+        },
+        {
+          "item": "0020",
+          "material": "G1RP50BBK004",
+          "description": "SHEET RPG-50 BLUE/BLACK(9-1)",
+          "quantity": "5.000",
+          "unit": "SH",
+          "itemCategory": "L",
+          "assembly": true
+        },
+        {
+          "item": "0030",
+          "material": "G1RP50RBK004",
+          "description": "SHEET RPG-50 RED/BLACK(9-1)",
+          "quantity": "5.000",
+          "unit": "SH",
+          "itemCategory": "L",
+          "assembly": true
+        },
+        {
+          "item": "0040",
+          "material": "G1RP50TBK004",
+          "description": "SHEET RPG-50 T.BLUE/BLACK (9-1)",
+          "quantity": "5.000",
+          "unit": "SH",
+          "itemCategory": "L",
+          "assembly": true
+        },
+        {
+          "item": "0050",
+          "material": "21000352",
+          "description": "CUTTING / JAAL (BLACK COLOUR)",
+          "quantity": "3.638-",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        }
+      ],
+      "warnings": [],
+      "executionPath": "CROSS_PLANT_DIRECT_ENTRY",
+      "isCrossPlantExistingBom": true,
+      "status": "COPIED_AND_VERIFIED_VIA_GUI"
+    },
+    "sourcePrompt": "Hierarchy sub-BOM copy (depth 1) for main BOM A1BH0214C",
+    "actionId": "act_1790760681270_8883bf8d_bom_1_B1BH0214C_alt10",
+    "timestamp": "2026-09-30T09:33:07.104Z"
+  },
+  {
+    "logId": "audit_1790760814766_9d0ae736",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "bom",
+    "actionType": "copy_bom",
+    "recordId": "G1RP50TNB004",
+    "businessPartnerId": "G1RP50TNB004",
+    "task": "Sub-BOM Copy (G1RP50TNB004)",
+    "reason": null,
+    "steps": [
+      "Initiated copy_bom action for bom G1RP50TNB004",
+      "Human confirmation verified",
+      "Executed copy_bom successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": {
+      "material": "G1RP50TNB004",
+      "plant": "1012",
+      "bomUsage": "1",
+      "alternativeBom": "10",
+      "validFrom": "30.09.2026",
+      "components": [
+        {
+          "item": "0010",
+          "material": "H1SOTAN0031",
+          "description": "COMP RPG 50 SOLE  TAN (9-1)",
+          "quantity": "0.550",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": true
+        },
+        {
+          "item": "0020",
+          "material": "H1SOBLK0141",
+          "description": "COMP RPG 50 SOLE  BLACK (9-1)",
+          "quantity": "1.300",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": true
+        },
+        {
+          "item": "0030",
+          "material": "11021687",
+          "description": "SILICONE EMULSION (36-40% OIL CONTENT)",
+          "quantity": "0.007",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0040",
+          "material": "H1SOBLK0039",
+          "description": "COMP HI-LITE-JR-02 SOLE BLACK",
+          "quantity": "1",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": true
+        }
+      ],
+      "warnings": [],
+      "executionPath": "CROSS_PLANT_DIRECT_ENTRY",
+      "isCrossPlantExistingBom": true,
+      "status": "COPIED_AND_VERIFIED_VIA_GUI"
+    },
+    "sourcePrompt": "Hierarchy sub-BOM copy (depth 2) for main BOM A1BH0214C",
+    "actionId": "act_1790760681270_8883bf8d_bom_2_G1RP50TNB004_alt10",
+    "timestamp": "2026-09-30T09:33:34.767Z"
+  },
+  {
+    "logId": "audit_1790760845887_02bb272c",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "bom",
+    "actionType": "copy_bom",
+    "recordId": "H1SOTAN0031",
+    "businessPartnerId": "H1SOTAN0031",
+    "task": "Sub-BOM Copy (H1SOTAN0031)",
+    "reason": null,
+    "steps": [
+      "Initiated copy_bom action for bom H1SOTAN0031",
+      "Human confirmation verified",
+      "Executed copy_bom successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": {
+      "material": "H1SOTAN0031",
+      "plant": "1012",
+      "bomUsage": "1",
+      "alternativeBom": "8",
+      "validFrom": "30.09.2026",
+      "components": [
+        {
+          "item": "0010",
+          "material": "11021483",
+          "description": "EVA 18%",
+          "quantity": "26.500",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0020",
+          "material": "11021328",
+          "description": "CALCIUM CARBONATE PPT",
+          "quantity": "49.700",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0030",
+          "material": "11021495",
+          "description": "ALUMINIUM SILICATE",
+          "quantity": "13.400",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0040",
+          "material": "11021408",
+          "description": "PRECIPITATED SILICA,(GENERAL)",
+          "quantity": "6",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0050",
+          "material": "11021739",
+          "description": "DOTP",
+          "quantity": "1",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0060",
+          "material": "11021527",
+          "description": "OIL RUBBER PROCESS NAPHTHENIC",
+          "quantity": "1",
+          "unit": "L",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0070",
+          "material": "11021360",
+          "description": "DEG",
+          "quantity": "0.500",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0090",
+          "material": "11021323",
+          "description": "BLOWING AGENT - ADC L-5",
+          "quantity": "2.600",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0100",
+          "material": "11021494",
+          "description": "BLOWING AGENT ADC-PT",
+          "quantity": "0.800",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0110",
+          "material": "11021487",
+          "description": "DCP-99%",
+          "quantity": "0.880",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0120",
+          "material": "11021480",
+          "description": "NATURAL RUBBER RMA IX",
+          "quantity": "16",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0130",
+          "material": "11021433",
+          "description": "STEARIC ACID - RUBBER,GRADE",
+          "quantity": "0.950",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0140",
+          "material": "11021450",
+          "description": "ZINC STEARATE - PPT",
+          "quantity": "1.200",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0150",
+          "material": "11021448",
+          "description": "ZINC OXIDE",
+          "quantity": "1.800",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0160",
+          "material": "11021356",
+          "description": "COLOUR YELLOW  OXIDE -CLASSIC",
+          "quantity": "2.900",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0170",
+          "material": "11021342",
+          "description": "COLOUR RED IRON OXIDE",
+          "quantity": "1.900",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0180",
+          "material": "11021331",
+          "description": "CARBON BLACK N-326",
+          "quantity": "0.520",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0200",
+          "material": "11021375",
+          "description": "LDPE - 1020 FA20",
+          "quantity": "10.500",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        }
+      ],
+      "warnings": [],
+      "executionPath": "CROSS_PLANT_DIRECT_ENTRY",
+      "isCrossPlantExistingBom": true,
+      "status": "COPIED_AND_VERIFIED_VIA_GUI"
+    },
+    "sourcePrompt": "Hierarchy sub-BOM copy (depth 3) for main BOM A1BH0214C",
+    "actionId": "act_1790760681270_8883bf8d_bom_3_H1SOTAN0031_alt8",
+    "timestamp": "2026-09-30T09:34:05.887Z"
+  },
+  {
+    "logId": "audit_1790760877042_0de94168",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "bom",
+    "actionType": "copy_bom",
+    "recordId": "H1SOBLK0141",
+    "businessPartnerId": "H1SOBLK0141",
+    "task": "Sub-BOM Copy (H1SOBLK0141)",
+    "reason": null,
+    "steps": [
+      "Initiated copy_bom action for bom H1SOBLK0141",
+      "Human confirmation verified",
+      "Executed copy_bom successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": {
+      "material": "H1SOBLK0141",
+      "plant": "1012",
+      "bomUsage": "1",
+      "alternativeBom": "5",
+      "validFrom": "30.09.2026",
+      "components": [
+        {
+          "item": "0010",
+          "material": "11021483",
+          "description": "EVA 18%",
+          "quantity": "26.500",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0020",
+          "material": "11021527",
+          "description": "OIL RUBBER PROCESS NAPHTHENIC",
+          "quantity": "1",
+          "unit": "L",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0030",
+          "material": "11021360",
+          "description": "DEG",
+          "quantity": "0.560",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0040",
+          "material": "I1CMBMIX001",
+          "description": "CRUMB (MIX)",
+          "quantity": "45",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": true
+        },
+        {
+          "item": "0050",
+          "material": "11021323",
+          "description": "BLOWING AGENT - ADC L-5",
+          "quantity": "3.400",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0060",
+          "material": "11021494",
+          "description": "BLOWING AGENT ADC-PT",
+          "quantity": "0.400",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0070",
+          "material": "11021487",
+          "description": "DCP-99%",
+          "quantity": "0.950",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0090",
+          "material": "11021375",
+          "description": "LDPE - 1020 FA20",
+          "quantity": "10.500",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0100",
+          "material": "11021433",
+          "description": "STEARIC ACID - RUBBER,GRADE",
+          "quantity": "0.900",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0110",
+          "material": "11021450",
+          "description": "ZINC STEARATE - PPT",
+          "quantity": "0.600",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0120",
+          "material": "11021448",
+          "description": "ZINC OXIDE",
+          "quantity": "2.030",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0130",
+          "material": "11021331",
+          "description": "CARBON BLACK N-326",
+          "quantity": "2.500",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0140",
+          "material": "11021328",
+          "description": "CALCIUM CARBONATE PPT",
+          "quantity": "27.600",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0150",
+          "material": "11021739",
+          "description": "DOTP",
+          "quantity": "1",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0160",
+          "material": "11021624",
+          "description": "NATURAL RUBBER SVR 3L",
+          "quantity": "16",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        }
+      ],
+      "warnings": [],
+      "executionPath": "CROSS_PLANT_DIRECT_ENTRY",
+      "isCrossPlantExistingBom": true,
+      "status": "COPIED_AND_VERIFIED_VIA_GUI"
+    },
+    "sourcePrompt": "Hierarchy sub-BOM copy (depth 3) for main BOM A1BH0214C",
+    "actionId": "act_1790760681270_8883bf8d_bom_3_H1SOBLK0141_alt5",
+    "timestamp": "2026-09-30T09:34:37.042Z"
+  },
+  {
+    "logId": "audit_1790760902431_33bf063d",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "bom",
+    "actionType": "copy_bom",
+    "recordId": "I1CMBMIX001",
+    "businessPartnerId": "I1CMBMIX001",
+    "task": "Sub-BOM Copy (I1CMBMIX001)",
+    "reason": null,
+    "steps": [
+      "Initiated copy_bom action for bom I1CMBMIX001",
+      "Human confirmation verified",
+      "Executed copy_bom successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": {
+      "material": "I1CMBMIX001",
+      "plant": "1012",
+      "bomUsage": "1",
+      "alternativeBom": "10",
+      "validFrom": "30.09.2026",
+      "components": [
+        {
+          "item": "0010",
+          "material": "21000352",
+          "description": "CUTTING / JAAL (BLACK COLOUR)",
+          "quantity": "100",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        }
+      ],
+      "warnings": [],
+      "executionPath": "CROSS_PLANT_DIRECT_ENTRY",
+      "isCrossPlantExistingBom": true,
+      "status": "COPIED_AND_VERIFIED_VIA_GUI"
+    },
+    "sourcePrompt": "Hierarchy sub-BOM copy (depth 4) for main BOM A1BH0214C",
+    "actionId": "act_1790760681270_8883bf8d_bom_4_I1CMBMIX001_alt10",
+    "timestamp": "2026-09-30T09:35:02.431Z"
+  },
+  {
+    "logId": "audit_1790760935034_ea46d475",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "bom",
+    "actionType": "copy_bom",
+    "recordId": "H1SOBLK0039",
+    "businessPartnerId": "H1SOBLK0039",
+    "task": "Sub-BOM Copy (H1SOBLK0039)",
+    "reason": null,
+    "steps": [
+      "Initiated copy_bom action for bom H1SOBLK0039",
+      "Human confirmation verified",
+      "Executed copy_bom successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": {
+      "material": "H1SOBLK0039",
+      "plant": "1012",
+      "bomUsage": "1",
+      "alternativeBom": "4",
+      "validFrom": "30.09.2026",
+      "components": [
+        {
+          "item": "0010",
+          "material": "I1CMBMIX001",
+          "description": "CRUMB (MIX)",
+          "quantity": "25",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": true
+        },
+        {
+          "item": "0020",
+          "material": "11021360",
+          "description": "DEG",
+          "quantity": "0.600",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0030",
+          "material": "11021331",
+          "description": "CARBON BLACK N-326",
+          "quantity": "2.030",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0040",
+          "material": "11021328",
+          "description": "CALCIUM CARBONATE PPT",
+          "quantity": "16",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0050",
+          "material": "11021323",
+          "description": "BLOWING AGENT - ADC L-5",
+          "quantity": "3.500",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0070",
+          "material": "11021494",
+          "description": "BLOWING AGENT ADC-PT",
+          "quantity": "0.800",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0080",
+          "material": "11021487",
+          "description": "DCP-99%",
+          "quantity": "1.350",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0090",
+          "material": "11021483",
+          "description": "EVA 18%",
+          "quantity": "47",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0100",
+          "material": "11021450",
+          "description": "ZINC STEARATE - PPT",
+          "quantity": "1.550",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0110",
+          "material": "11021448",
+          "description": "ZINC OXIDE",
+          "quantity": "2.340",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0120",
+          "material": "11021433",
+          "description": "STEARIC ACID - RUBBER,GRADE",
+          "quantity": "0.780",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0130",
+          "material": "11021375",
+          "description": "LDPE - 1020 FA20",
+          "quantity": "11.500",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0140",
+          "material": "11021739",
+          "description": "DOTP",
+          "quantity": "2",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0150",
+          "material": "11021527",
+          "description": "OIL RUBBER PROCESS NAPHTHENIC",
+          "quantity": "1.500",
+          "unit": "L",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0160",
+          "material": "11021624",
+          "description": "NATURAL RUBBER SVR 3L",
+          "quantity": "19.500",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        }
+      ],
+      "warnings": [],
+      "executionPath": "CROSS_PLANT_DIRECT_ENTRY",
+      "isCrossPlantExistingBom": true,
+      "status": "COPIED_AND_VERIFIED_VIA_GUI"
+    },
+    "sourcePrompt": "Hierarchy sub-BOM copy (depth 3) for main BOM A1BH0214C",
+    "actionId": "act_1790760681270_8883bf8d_bom_3_H1SOBLK0039_alt4",
+    "timestamp": "2026-09-30T09:35:35.034Z"
+  },
+  {
+    "logId": "audit_1790760961180_f46fa346",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "bom",
+    "actionType": "copy_bom",
+    "recordId": "G1RP50BBK004",
+    "businessPartnerId": "G1RP50BBK004",
+    "task": "Sub-BOM Copy (G1RP50BBK004)",
+    "reason": null,
+    "steps": [
+      "Initiated copy_bom action for bom G1RP50BBK004",
+      "Human confirmation verified",
+      "Executed copy_bom successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": {
+      "material": "G1RP50BBK004",
+      "plant": "1012",
+      "bomUsage": "1",
+      "alternativeBom": "4",
+      "validFrom": "30.09.2026",
+      "components": [
+        {
+          "item": "0010",
+          "material": "H1SOBLU0306",
+          "description": "COMP RPG 50 SOLE  BLUE (9-1)",
+          "quantity": "0.550",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": true
+        },
+        {
+          "item": "0020",
+          "material": "H1SOBLK0141",
+          "description": "COMP RPG 50 SOLE  BLACK (9-1)",
+          "quantity": "1.300",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": true
+        },
+        {
+          "item": "0030",
+          "material": "11021687",
+          "description": "SILICONE EMULSION (36-40% OIL CONTENT)",
+          "quantity": "0.007",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": false
+        },
+        {
+          "item": "0040",
+          "material": "H1SOBLK0039",
+          "description": "COMP HI-LITE-JR-02 SOLE BLACK",
+          "quantity": "1",
+          "unit": "KG",
+          "itemCategory": "L",
+          "assembly": true
+        }
+      ],
+      "warnings": [],
+      "executionPath": "CROSS_PLANT_DIRECT_ENTRY",
+      "isCrossPlantExistingBom": true,
+      "status": "COPIED_AND_VERIFIED_VIA_GUI"
+    },
+    "sourcePrompt": "Hierarchy sub-BOM copy (depth 2) for main BOM A1BH0214C",
+    "actionId": "act_1790760681270_8883bf8d_bom_2_G1RP50BBK004_alt4",
+    "timestamp": "2026-09-30T09:36:01.180Z"
+  },
+  {
+    "logId": "audit_1791197008412_59e84fec",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "bom",
+    "actionType": "delete_bom",
+    "recordId": "A1BH0214C",
+    "businessPartnerId": "A1BH0214C",
+    "task": "DELETE_BOM Record",
+    "reason": "Permanent deletion test of Alternative 09 via RFC",
+    "steps": [
+      "Initiated delete_bom action for bom A1BH0214C",
+      "Human confirmation verified",
+      "Executed delete_bom successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": {
+      "material": "A1BH0214C",
+      "plant": "1001",
+      "alternativeBom": "9",
+      "bomUsage": "1"
+    },
+    "afterValues": {
+      "material": "A1BH0214C",
+      "plant": "1001",
+      "alternativeBom": "9",
+      "bomUsage": "1",
+      "status": "DELETED_VIA_RFC",
+      "verifiedInSap": true,
+      "remainingAlternatives": [
+        "02",
+        "03",
+        "04",
+        "07"
+      ]
+    },
+    "sourcePrompt": "Delete BOM",
+    "actionId": "act_1791197004319_2cde909c",
+    "timestamp": "2026-10-05T10:43:28.412Z"
+  },
+  {
+    "logId": "audit_1791262961740_66f069b2",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "bom",
+    "actionType": "delete_bom",
+    "recordId": "A1BH0214C",
+    "businessPartnerId": "A1BH0214C",
+    "task": "DELETE_BOM Record",
+    "reason": "TESTING",
+    "steps": [
+      "Initiated delete_bom action for bom A1BH0214C",
+      "Human confirmation verified",
+      "Executed delete_bom successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": {
+      "material": "A1BH0214C",
+      "plant": "1012",
+      "alternativeBom": "1",
+      "bomUsage": "12"
+    },
+    "afterValues": {
+      "material": "A1BH0214C",
+      "plant": "1012",
+      "alternativeBom": "1",
+      "bomUsage": "12",
+      "status": "DELETED_VIA_RFC",
+      "verifiedInSap": true,
+      "remainingAlternatives": []
+    },
+    "sourcePrompt": "Delete BOM for Material A1BH0214C in plant 1012 (Alternative BOM 1, Usage 12)",
+    "actionId": "act_1791262949447_ab819ff8",
+    "timestamp": "2026-10-06T05:02:41.740Z"
+  },
+  {
+    "logId": "audit_1791263020607_9b63e916",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "bom",
+    "actionType": "delete_bom",
+    "recordId": "A1BH0214C",
+    "businessPartnerId": "A1BH0214C",
+    "task": "DELETE_BOM Record",
+    "reason": "TTESSTING",
+    "steps": [
+      "Initiated delete_bom action for bom A1BH0214C",
+      "Human confirmation verified",
+      "Executed delete_bom successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": {
+      "material": "A1BH0214C",
+      "plant": "1012",
+      "alternativeBom": "12",
+      "bomUsage": "1"
+    },
+    "afterValues": {
+      "material": "A1BH0214C",
+      "plant": "1012",
+      "alternativeBom": "12",
+      "bomUsage": "1",
+      "status": "DELETED_VIA_RFC",
+      "verifiedInSap": true,
+      "remainingAlternatives": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "09",
+        "08",
+        "11"
+      ]
+    },
+    "sourcePrompt": "Delete BOM for Material A1BH0214C in plant 1012 (Alternative BOM 12, Usage 1)",
+    "actionId": "act_1791263009481_ba972f89",
+    "timestamp": "2026-10-06T05:03:40.608Z"
+  },
+  {
+    "logId": "audit_1791266045504_a3f4e751",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "material",
+    "actionType": "extend_material",
+    "recordId": "UNEXT_TARGET",
+    "businessPartnerId": "UNEXT_TARGET",
+    "task": "EXTEND_MATERIAL Record",
+    "reason": null,
+    "steps": [
+      "Initiated extend_material action for material UNEXT_TARGET",
+      "Human confirmation verified",
+      "Executed extend_material successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": null,
+    "sourcePrompt": "Extend UNEXT_TARGET to plant 1001",
+    "actionId": "act_1791266045484_40dda8da",
+    "timestamp": "2026-10-06T05:54:05.504Z"
+  },
+  {
+    "logId": "audit_1791266129030_ab8ccb22",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "material",
+    "actionType": "extend_material",
+    "recordId": "UNEXT_TARGET",
+    "businessPartnerId": "UNEXT_TARGET",
+    "task": "EXTEND_MATERIAL Record",
+    "reason": null,
+    "steps": [
+      "Initiated extend_material action for material UNEXT_TARGET",
+      "Human confirmation verified",
+      "Executed extend_material successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": null,
+    "sourcePrompt": "Extend UNEXT_TARGET to plant 1001",
+    "actionId": "act_1791266129011_f69089cd",
+    "timestamp": "2026-10-06T05:55:29.030Z"
+  },
+  {
+    "logId": "audit_1791267426486_3dd1fc8f",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "material",
+    "actionType": "extend_material",
+    "recordId": "UNEXT_TARGET",
+    "businessPartnerId": "UNEXT_TARGET",
+    "task": "EXTEND_MATERIAL Record",
+    "reason": null,
+    "steps": [
+      "Initiated extend_material action for material UNEXT_TARGET",
+      "Human confirmation verified",
+      "Executed extend_material successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": null,
+    "sourcePrompt": "Extend UNEXT_TARGET to plant 1001",
+    "actionId": "act_1791267426468_4bf73018",
+    "timestamp": "2026-10-06T06:17:06.486Z"
+  },
+  {
+    "logId": "audit_1791268725733_ce941a40",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "material",
+    "actionType": "extend_material",
+    "recordId": "UNEXT_TARGET",
+    "businessPartnerId": "UNEXT_TARGET",
+    "task": "EXTEND_MATERIAL Record",
+    "reason": null,
+    "steps": [
+      "Initiated extend_material action for material UNEXT_TARGET",
+      "Human confirmation verified",
+      "Executed extend_material successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": null,
+    "sourcePrompt": "Extend UNEXT_TARGET to plant 1001",
+    "actionId": "act_1791268725711_cf97fa1e",
+    "timestamp": "2026-10-06T06:38:45.733Z"
+  },
+  {
+    "logId": "audit_1791268762533_4193a83f",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "material",
+    "actionType": "extend_material",
+    "recordId": "UNEXT_TARGET",
+    "businessPartnerId": "UNEXT_TARGET",
+    "task": "EXTEND_MATERIAL Record",
+    "reason": null,
+    "steps": [
+      "Initiated extend_material action for material UNEXT_TARGET",
+      "Human confirmation verified",
+      "Executed extend_material successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": null,
+    "sourcePrompt": "Extend UNEXT_TARGET to plant 1001",
+    "actionId": "act_1791268762514_b5b1a8bc",
+    "timestamp": "2026-10-06T06:39:22.533Z"
+  },
+  {
+    "logId": "audit_1791268801992_7fdb8f54",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "material",
+    "actionType": "extend_material",
+    "recordId": "UNEXT_TARGET",
+    "businessPartnerId": "UNEXT_TARGET",
+    "task": "EXTEND_MATERIAL Record",
+    "reason": null,
+    "steps": [
+      "Initiated extend_material action for material UNEXT_TARGET",
+      "Human confirmation verified",
+      "Executed extend_material successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": null,
+    "sourcePrompt": "Extend UNEXT_TARGET to plant 1001",
+    "actionId": "act_1791268801973_2c2d4ae3",
+    "timestamp": "2026-10-06T06:40:01.992Z"
+  },
+  {
+    "logId": "audit_1791268906372_81bc6969",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "material",
+    "actionType": "extend_material",
+    "recordId": "UNEXT_TARGET",
+    "businessPartnerId": "UNEXT_TARGET",
+    "task": "EXTEND_MATERIAL Record",
+    "reason": null,
+    "steps": [
+      "Initiated extend_material action for material UNEXT_TARGET",
+      "Human confirmation verified",
+      "Executed extend_material successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": null,
+    "sourcePrompt": "Extend UNEXT_TARGET to plant 1001",
+    "actionId": "act_1791268906353_a9593d16",
+    "timestamp": "2026-10-06T06:41:46.372Z"
+  },
+  {
+    "logId": "audit_1791269603849_cc3f3d40",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "material",
+    "actionType": "extend_material",
+    "recordId": "UNEXT_TARGET",
+    "businessPartnerId": "UNEXT_TARGET",
+    "task": "EXTEND_MATERIAL Record",
+    "reason": null,
+    "steps": [
+      "Initiated extend_material action for material UNEXT_TARGET",
+      "Human confirmation verified",
+      "Executed extend_material successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": null,
+    "sourcePrompt": "Extend UNEXT_TARGET to plant 1001",
+    "actionId": "act_1791269603832_ed20b6d4",
+    "timestamp": "2026-10-06T06:53:23.849Z"
+  },
+  {
+    "logId": "audit_1791269650342_f924cb01",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "material",
+    "actionType": "extend_material",
+    "recordId": "UNEXT_TARGET",
+    "businessPartnerId": "UNEXT_TARGET",
+    "task": "EXTEND_MATERIAL Record",
+    "reason": null,
+    "steps": [
+      "Initiated extend_material action for material UNEXT_TARGET",
+      "Human confirmation verified",
+      "Executed extend_material successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": null,
+    "sourcePrompt": "Extend UNEXT_TARGET to plant 1001",
+    "actionId": "act_1791269650323_f0f97cc7",
+    "timestamp": "2026-10-06T06:54:10.342Z"
+  },
+  {
+    "logId": "audit_1791269650351_7982ff80",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "material",
+    "actionType": "extend_material",
+    "recordId": "UNEXT_TARGET",
+    "businessPartnerId": "UNEXT_TARGET",
+    "task": "EXTEND_MATERIAL Record",
+    "reason": null,
+    "steps": [
+      "Initiated extend_material action for material UNEXT_TARGET",
+      "Human confirmation verified",
+      "Executed extend_material successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": null,
+    "sourcePrompt": "Extend Material UNEXT_TARGET to Plant 2000 via MM01",
+    "actionId": "act_1791269650349_jtou1",
+    "timestamp": "2026-10-06T06:54:10.351Z"
+  },
+  {
+    "logId": "audit_1791269679375_0f201812",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "material",
+    "actionType": "extend_material",
+    "recordId": "UNEXT_TARGET",
+    "businessPartnerId": "UNEXT_TARGET",
+    "task": "EXTEND_MATERIAL Record",
+    "reason": null,
+    "steps": [
+      "Initiated extend_material action for material UNEXT_TARGET",
+      "Human confirmation verified",
+      "Executed extend_material successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": null,
+    "sourcePrompt": "Extend UNEXT_TARGET to plant 1001",
+    "actionId": "act_1791269679357_246d0171",
+    "timestamp": "2026-10-06T06:54:39.375Z"
+  },
+  {
+    "logId": "audit_1791269679384_b9893106",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "material",
+    "actionType": "extend_material",
+    "recordId": "UNEXT_TARGET",
+    "businessPartnerId": "UNEXT_TARGET",
+    "task": "EXTEND_MATERIAL Record",
+    "reason": null,
+    "steps": [
+      "Initiated extend_material action for material UNEXT_TARGET",
+      "Human confirmation verified",
+      "Executed extend_material successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": null,
+    "sourcePrompt": "Extend Material UNEXT_TARGET to Plant 2000 via MM01",
+    "actionId": "act_1791269679382_v5j8k",
+    "timestamp": "2026-10-06T06:54:39.384Z"
+  },
+  {
+    "logId": "audit_1791269679391_8b675b7a",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "material",
+    "actionType": "extend_material",
+    "recordId": "UNEXT_TARGET",
+    "businessPartnerId": "UNEXT_TARGET",
+    "task": "EXTEND_MATERIAL Record",
+    "reason": null,
+    "steps": [
+      "Initiated extend_material action for material UNEXT_TARGET",
+      "Human confirmation verified",
+      "Executed extend_material successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": null,
+    "sourcePrompt": "Extend Material UNEXT_TARGET to Plant 3000 via MM01",
+    "actionId": "act_1791269679387_wj4jn",
+    "timestamp": "2026-10-06T06:54:39.391Z"
+  },
+  {
+    "logId": "audit_1791271379670_7722652a",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "material",
+    "actionType": "extend_material",
+    "recordId": "UNEXT_TARGET",
+    "businessPartnerId": "UNEXT_TARGET",
+    "task": "EXTEND_MATERIAL Record",
+    "reason": null,
+    "steps": [
+      "Initiated extend_material action for material UNEXT_TARGET",
+      "Human confirmation verified",
+      "Executed extend_material successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": null,
+    "sourcePrompt": "Extend UNEXT_TARGET to plant 1001",
+    "actionId": "act_1791271379650_d381f61a",
+    "timestamp": "2026-10-06T07:22:59.670Z"
+  },
+  {
+    "logId": "audit_1791271379680_a9ad7b8b",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "material",
+    "actionType": "extend_material",
+    "recordId": "UNEXT_TARGET",
+    "businessPartnerId": "UNEXT_TARGET",
+    "task": "EXTEND_MATERIAL Record",
+    "reason": null,
+    "steps": [
+      "Initiated extend_material action for material UNEXT_TARGET",
+      "Human confirmation verified",
+      "Executed extend_material successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": null,
+    "sourcePrompt": "Extend Material UNEXT_TARGET to Plant 2000 via MM01",
+    "actionId": "act_1791271379678_uwj7y",
+    "timestamp": "2026-10-06T07:22:59.680Z"
+  },
+  {
+    "logId": "audit_1791271379686_803a4977",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "material",
+    "actionType": "extend_material",
+    "recordId": "UNEXT_TARGET",
+    "businessPartnerId": "UNEXT_TARGET",
+    "task": "EXTEND_MATERIAL Record",
+    "reason": null,
+    "steps": [
+      "Initiated extend_material action for material UNEXT_TARGET",
+      "Human confirmation verified",
+      "Executed extend_material successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": null,
+    "sourcePrompt": "Extend Material UNEXT_TARGET to Plant 3000 via MM01",
+    "actionId": "act_1791271379683_18rmf",
+    "timestamp": "2026-10-06T07:22:59.686Z"
+  },
+  {
+    "logId": "audit_1791274481318_1348b82b",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "material",
+    "actionType": "extend_material",
+    "recordId": "A1BH0214C",
+    "businessPartnerId": "A1BH0214C",
+    "task": "EXTEND_MATERIAL Record",
+    "reason": null,
+    "steps": [
+      "Initiated extend_material action for material A1BH0214C",
+      "Human confirmation verified",
+      "Executed extend_material successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": null,
+    "afterValues": {
+      "material": "A1BH0214C",
+      "plant": "1012",
+      "bomUsage": "1",
+      "alternativeBom": "12",
+      "bomNumber": "00783758",
+      "components": [
+        {
+          "ITEM_NO": "0010",
+          "ITEM_CATEG": "L",
+          "COMPONENT": "B1BH0214C",
+          "COMP_QTY": "100",
+          "COMP_UNIT": "PAA"
+        },
+        {
+          "ITEM_NO": "0020",
+          "ITEM_CATEG": "L",
+          "COMPONENT": "C1BH0214C",
+          "COMP_QTY": "100",
+          "COMP_UNIT": "PAA"
+        },
+        {
+          "ITEM_NO": "0030",
+          "ITEM_CATEG": "L",
+          "COMPONENT": "000000000011021735",
+          "COMP_QTY": "0.017",
+          "COMP_UNIT": "KG"
+        },
+        {
+          "ITEM_NO": "0040",
+          "ITEM_CATEG": "L",
+          "COMPONENT": "000000000011021733",
+          "COMP_QTY": "0.015",
+          "COMP_UNIT": "KG"
+        },
+        {
+          "ITEM_NO": "0050",
+          "ITEM_CATEG": "L",
+          "COMPONENT": "000000000011021737",
+          "COMP_QTY": "0.002",
+          "COMP_UNIT": "KG"
+        },
+        {
+          "ITEM_NO": "0060",
+          "ITEM_CATEG": "L",
+          "COMPONENT": "000000000011021734",
+          "COMP_QTY": "0.002",
+          "COMP_UNIT": "KG"
+        },
+        {
+          "ITEM_NO": "0070",
+          "ITEM_CATEG": "L",
+          "COMPONENT": "000000000011021732",
+          "COMP_QTY": "0.003",
+          "COMP_UNIT": "KG"
+        },
+        {
+          "ITEM_NO": "0080",
+          "ITEM_CATEG": "L",
+          "COMPONENT": "000000000011022139",
+          "COMP_QTY": "0.001",
+          "COMP_UNIT": "KG"
+        },
+        {
+          "ITEM_NO": "0090",
+          "ITEM_CATEG": "L",
+          "COMPONENT": "000000000011021686",
+          "COMP_QTY": "0.125",
+          "COMP_UNIT": "KG"
+        },
+        {
+          "ITEM_NO": "0100",
+          "ITEM_CATEG": "L",
+          "COMPONENT": "000000000011022154",
+          "COMP_QTY": "0.1",
+          "COMP_UNIT": "L"
+        },
+        {
+          "ITEM_NO": "0110",
+          "ITEM_CATEG": "L",
+          "COMPONENT": "000000000012000079",
+          "COMP_QTY": "0.22",
+          "COMP_UNIT": "KG"
+        },
+        {
+          "ITEM_NO": "0120",
+          "ITEM_CATEG": "L",
+          "COMPONENT": "PPBH0001C",
+          "COMP_QTY": "100",
+          "COMP_UNIT": "EA"
+        },
+        {
+          "ITEM_NO": "0130",
+          "ITEM_CATEG": "L",
+          "COMPONENT": "000000000011021698",
+          "COMP_QTY": "0.09",
+          "COMP_UNIT": "L"
+        },
+        {
+          "ITEM_NO": "0140",
+          "ITEM_CATEG": "L",
+          "COMPONENT": "C1HL0003C",
+          "COMP_QTY": "100",
+          "COMP_UNIT": "PAA"
+        },
+        {
+          "ITEM_NO": "0150",
+          "ITEM_CATEG": "L",
+          "COMPONENT": "000000000011031877",
+          "COMP_QTY": "0.018",
+          "COMP_UNIT": "KG"
+        },
+        {
+          "ITEM_NO": "0160",
+          "ITEM_CATEG": "L",
+          "COMPONENT": "000000000011031874",
+          "COMP_QTY": "0.017",
+          "COMP_UNIT": "KG"
+        }
+      ],
+      "verifiedInSap": true,
+      "status": "CREATED_VIA_RFC"
+    },
+    "sourcePrompt": "Extend Material A1BH0214C to Plant 1012 via MM01",
+    "actionId": "act_1791274462050_pzt4y",
+    "timestamp": "2026-10-06T08:14:41.318Z"
+  },
+  {
+    "logId": "audit_1791274721264_7592738c",
+    "sapUsername": "LEELAM_EXT",
+    "user": "LEELAM_EXT",
+    "system": "DEV",
+    "entityKey": "bom",
+    "actionType": "delete_bom",
+    "recordId": "A1BH0214C",
+    "businessPartnerId": "A1BH0214C",
+    "task": "DELETE_BOM Record",
+    "reason": "sdffvb;o",
+    "steps": [
+      "Initiated delete_bom action for bom A1BH0214C",
+      "Human confirmation verified",
+      "Executed delete_bom successfully"
+    ],
+    "result": "SUCCESS",
+    "ticketId": null,
+    "beforeValues": {
+      "material": "A1BH0214C",
+      "plant": "1012",
+      "alternativeBom": "13",
+      "bomUsage": "1"
+    },
+    "afterValues": {
+      "material": "A1BH0214C",
+      "plant": "1012",
+      "alternativeBom": "13",
+      "bomUsage": "1",
+      "status": "DELETED_VIA_RFC",
+      "verifiedInSap": true,
+      "remainingAlternatives": [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "09",
+        "08",
+        "11",
+        "12"
+      ]
+    },
+    "sourcePrompt": "Delete BOM for Material A1BH0214C in plant 1012 (Alternative BOM 13, Usage 1)",
+    "actionId": "act_1791274710663_ba81c0cf",
+    "timestamp": "2026-10-06T08:18:41.264Z"
   }
 ]

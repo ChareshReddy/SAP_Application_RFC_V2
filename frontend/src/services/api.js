@@ -172,6 +172,44 @@ export async function validateSourceBom(params) {
 }
 
 /**
+ * Validates a batch of BOM items against SAP via high-speed RFC.
+ * @param {Array<object>} items
+ * @returns {Promise<{ success: boolean, totalItems: number, validCount: number, warningCount: number, errorCount: number, results: Array<object> }>}
+ */
+export async function batchValidateBoms(items) {
+  const response = await apiClient.post('/bom/batch-validate', { items });
+  return response.data;
+}
+
+/**
+ * Executes batch BOM copy sequentially via SAP RFC.
+ * @param {Array<object>} items
+ * @param {object} [options={ skipErrors: true }]
+ * @returns {Promise<{ success: boolean, totalProcessed: number, successCount: number, failedCount: number, results: Array<object> }>}
+ */
+export async function batchCopyBoms(items, options = { skipErrors: true }) {
+  const response = await apiClient.post('/bom/batch-copy', { items, ...options });
+  return response.data;
+}
+
+/**
+ * Downloads the official Excel template for Bulk BOM Copy.
+ */
+export async function downloadBomTemplate() {
+  const response = await apiClient.get('/bom/template', {
+    responseType: 'blob'
+  });
+  const url = window.URL.createObjectURL(new Blob([response.data]));
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', 'BOM_Copy_Template.xlsx');
+  document.body.appendChild(link);
+  link.click();
+  link.parentNode.removeChild(link);
+  window.URL.revokeObjectURL(url);
+}
+
+/**
  * Fetches current SAP GUI session health and connectivity status.
  * @returns {Promise<{ connected: boolean, status: string, system?: string, client?: string, user?: string, message?: string, code?: string, selectedSessionId?: string, sessions?: Array<object> }>}
  */

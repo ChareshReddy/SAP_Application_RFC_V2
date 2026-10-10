@@ -1,5 +1,6 @@
 import express from 'express';
 import { checkMaterialMaintenance } from '../services/materialCheck.js';
+import { rfcReadBom } from '../services/sapRfcClient.js';
 import { verifyBomInCs03, getMockBomDataset } from '../services/sapGuiClient.js';
 
 const router = express.Router();
@@ -36,20 +37,27 @@ async function handleMaterialCheck(req, res) {
     } else if (material && typeof material === 'string') {
       targetMaterials = [material];
     } else if (bomMaterial && typeof bomMaterial === 'string') {
-      // Expand BOM components to check
+      // Expand BOM components to check via fast RFC
       try {
-        const bomRes = await verifyBomInCs03({
-          material: bomMaterial,
-          plant: String(plant).trim(),
-          bomUsage: String(bomUsage).trim()
-        });
+        const useRfc = process.env.SAP_BOM_MODE !== 'GUI';
+        const bomRes = useRfc
+          ? await rfcReadBom({
+              material: bomMaterial,
+              plant: String(plant).trim(),
+              bomUsage: String(bomUsage).trim()
+            })
+          : await verifyBomInCs03({
+              material: bomMaterial,
+              plant: String(plant).trim(),
+              bomUsage: String(bomUsage).trim()
+            });
         const comps = bomRes.components || [];
         targetMaterials = [
           bomMaterial,
           ...comps.map((c) => c.material || c.component).filter(Boolean)
         ];
       } catch (bomErr) {
-        console.warn('[materialCheckRoute] Could not expand BOM components via CS03:', bomErr.message);
+        console.warn('[materialCheckRoute] Could not expand BOM components:', bomErr.message);
         targetMaterials = [bomMaterial];
       }
     } else {

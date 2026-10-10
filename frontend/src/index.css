@@ -2396,3 +2396,447 @@ input, select {
   }
 }
 
+/* ==========================================================================
+   Bulk BOM Copy Modal & Workflow Styling
+   ========================================================================== */
+
+.sap-bulk-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeInModal 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.sap-bulk-modal-container {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3), 0 0 1px 1px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 980px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.sap-bulk-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.sap-bulk-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sap-bulk-icon-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sap-bulk-modal-title h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.sap-bulk-modal-title p {
+  margin: 3px 0 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.sap-modal-close-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #94a3b8;
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.sap-modal-close-btn:hover {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+/* Steps Indicator */
+.sap-bulk-steps-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  background: #ffffff;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.sap-bulk-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.sap-bulk-step.active {
+  color: #0070f2;
+}
+
+.sap-bulk-step .step-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11.5px;
+}
+
+.sap-bulk-step.active .step-num {
+  background: #0070f2;
+  color: #ffffff;
+}
+
+.step-arrow {
+  color: #cbd5e1;
+}
+
+/* Modal Body */
+.sap-bulk-modal-body {
+  padding: 20px 24px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 340px;
+}
+
+/* Dropzone */
+.sap-dropzone-container {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.sap-file-dropzone {
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 44px 24px;
+  text-align: center;
+  background: #f8fafc;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.sap-file-dropzone:hover,
+.sap-file-dropzone.dragging {
+  border-color: #0070f2;
+  background: #eff6ff;
+}
+
+.dropzone-icon {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: #dbeafe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.sap-file-dropzone h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.sap-file-dropzone p {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+/* Template Helper Card */
+.sap-template-guide-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 14px 18px;
+}
+
+.sap-template-guide-card h5 {
+  margin: 0 0 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.sap-columns-pill-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.col-pill {
+  font-size: 11.5px;
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.col-pill.required {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+
+.col-pill.optional {
+  background: #f1f5f9;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+}
+
+/* Table View */
+.sap-bulk-table-view {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sap-bulk-file-info-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.sap-badge-count {
+  font-size: 12px;
+  background: #e2e8f0;
+  color: #334155;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.sap-bulk-status-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #f1f5f9;
+}
+
+.status-stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
+.status-stat.valid {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-stat.warning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-stat.error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* Grid Table */
+.sap-bulk-grid-container {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: auto;
+  max-height: 380px;
+}
+
+.sap-bulk-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  text-align: left;
+}
+
+.sap-bulk-table thead th {
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e2e8f0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.sap-bulk-table tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #1e293b;
+  vertical-align: middle;
+}
+
+.sap-bulk-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.sap-bulk-table tr.row-status-error {
+  background: #fff5f5;
+}
+
+.sap-bulk-table tr.row-status-warning {
+  background: #fffdf5;
+}
+
+.bom-identity-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mat-pill {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.sub-detail {
+  font-size: 11.5px;
+  color: #64748b;
+}
+
+.comp-count-badge {
+  display: inline-block;
+  background: #f1f5f9;
+  color: #334155;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11.5px;
+}
+
+/* Status Chips */
+.sap-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.chip-pending {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.chip-valid,
+.chip-success {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.chip-warning {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.chip-error,
+.chip-failed {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.message-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cell-msg-text {
+  font-size: 12px;
+  color: #475569;
+}
+
+.bom-num-tag {
+  font-size: 11px;
+  font-weight: 600;
+  color: #0070f2;
+}
+
+/* Footer */
+.sap-bulk-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  border-top: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.sap-btn-sm {
+  padding: 4px 10px;
+  font-size: 12px;
+  min-height: 30px;
+}
+
+

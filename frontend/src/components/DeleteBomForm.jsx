@@ -62,7 +62,7 @@ export default function DeleteBomForm({ onSubmit, onCancel, initialValues = {} }
             <Trash2 size={18} />
           </div>
           <div>
-            <h4>Delete Bill of Materials (ZBOM_COPY)</h4>
+            <h4>Delete Bill of Materials (RFC / BAPI)</h4>
             <p>Specify the exact BOM identifiers for permanent deletion.</p>
           </div>
         </div>

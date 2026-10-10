@@ -464,7 +464,7 @@ export default function ConfirmationCard({
             </div>
 
             <div style={{ marginTop: 10, fontSize: '12px', color: '#64748b' }}>
-              ℹ️ Executed directly via SAP GUI Scripting ZBOM_COPY in active Relaxo session. Post-delete verification will be confirmed in CS03.
+              ℹ️ Executed directly via SAP RFC/BAPI connection. BOM operations are verified and committed directly in SAP S/4HANA.
             </div>
 
             {/* Extra safety guard checkbox for deletes */}

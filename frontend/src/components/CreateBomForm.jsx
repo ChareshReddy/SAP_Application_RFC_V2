@@ -291,7 +291,7 @@ export default function CreateBomForm({ onSubmit, onCancel, initialValues = {} }
                 {isValidating ? (
                   <>
                     <Loader2 size={14} className="sap-spin-icon" />
-                    <span>Validating BOM in SAP GUI (CS03)...</span>
+                    <span>Validating BOM in SAP (RFC)...</span>
                   </>
                 ) : isValidated ? (
                   <>

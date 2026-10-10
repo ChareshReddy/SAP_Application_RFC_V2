@@ -88,7 +88,10 @@ app.use((err, req, res, next) => {
 });
 
 // Start server only when executed directly (not when imported in tests)
-const isMainModule = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+const isMainModule = process.argv[1] && (
+  path.resolve(process.argv[1]) === fileURLToPath(import.meta.url) ||
+  path.basename(process.argv[1]) === 'server.js'
+);
 if (isMainModule) {
   app.listen(PORT, () => {
     console.log(`=============================================`);

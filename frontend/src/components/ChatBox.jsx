@@ -1,16 +1,17 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Send, Bot, User, Sparkles, AlertTriangle, Trash2, ArrowUpRight, Copy } from 'lucide-react';
+import { Send, Bot, User, Sparkles, AlertTriangle, Trash2, ArrowUpRight, Copy, FileSpreadsheet } from 'lucide-react';
 import { sendChatMessage, confirmChatAction, cancelChatAction } from '../services/api';
 import EntityTable from './EntityTable';
 import ConfirmationCard from './ConfirmationCard';
 import CreateBomForm from './CreateBomForm';
 import DeleteBomForm from './DeleteBomForm';
+import BulkBomCopyModal from './BulkBomCopyModal';
 
 const INITIAL_GREETING = {
   id: 'welcome',
   sender: 'assistant',
-  text: "Hello! I am your **SAP AI Operations Assistant**.\n\nYou can ask questions about Bills of Materials, or use the quick actions below to **Create BOM** (CS01 Copy-From) or **Delete BOM** (ZBOM_COPY). All write and delete actions require your explicit confirmation before execution.",
+  text: "Hello! I am your **SAP AI Operations Assistant**.\n\nYou can ask questions about Bills of Materials, or use the quick actions below to **Copy BOM** (CS01 Copy-From), **Bulk Copy (Excel)**, or **Delete BOM** (ZBOM_COPY). All write and delete actions require your explicit confirmation before execution.",
   data: null,
   timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 };
@@ -20,6 +21,7 @@ export default function ChatBox({ isActive = true, onActionExecuted, systemKey =
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorBanner, setErrorBanner] = useState('');
+  const [isBulkModalOpen, setIsBulkModalOpen] = useState(false);
 
   const chatEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -89,7 +91,7 @@ export default function ChatBox({ isActive = true, onActionExecuted, systemKey =
       const userMsg = {
         id: Date.now().toString(),
         sender: 'user',
-        text: 'Create BOM',
+        text: 'Copy BOM',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
       const assistantMsg = {
@@ -120,6 +122,25 @@ export default function ChatBox({ isActive = true, onActionExecuted, systemKey =
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
       setMessages((prev) => [...prev, userMsg, assistantMsg]);
+      return;
+    }
+
+    if (actionType === 'bulk_bom_copy') {
+      setIsBulkModalOpen(true);
+      return;
+    }
+  };
+
+  const handleBulkExecutionComplete = (response) => {
+    const summaryMsg = {
+      id: Date.now().toString(),
+      sender: 'assistant',
+      text: `### 📋 Bulk BOM Copy Execution Completed\n\n- **Total Processed:** ${response.totalProcessed || 0}\n- **Successfully Copied:** ${response.successCount || 0}\n- **Failed / Skipped:** ${response.failedCount || 0}\n\nYou can view and download the full Excel report from the Bulk BOM Copy dialog.`,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+    setMessages((prev) => [...prev, summaryMsg]);
+    if (onActionExecuted) {
+      onActionExecuted('bulk_copy_bom');
     }
   };
 
@@ -130,7 +151,7 @@ export default function ChatBox({ isActive = true, onActionExecuted, systemKey =
     const cancelMsg = {
       id: (Date.now() + 1).toString(),
       sender: 'assistant',
-      text: 'Create BOM operation was cancelled.',
+      text: 'Copy BOM operation was cancelled.',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
     setMessages((prev) => [...prev, cancelMsg]);
@@ -181,8 +202,8 @@ export default function ChatBox({ isActive = true, onActionExecuted, systemKey =
         setErrorBanner(response.reply || 'Error validating BOM parameters.');
       }
     } catch (err) {
-      console.error('Error submitting Create BOM:', err);
-      const errorText = err.response?.data?.reply || err.response?.data?.error || 'Unable to submit Create BOM request.';
+      console.error('Error submitting Copy BOM:', err);
+      const errorText = err.response?.data?.reply || err.response?.data?.error || 'Unable to submit Copy BOM request.';
       setErrorBanner(errorText);
       const errorMsg = {
         id: (Date.now() + 1).toString(),
@@ -293,6 +314,13 @@ export default function ChatBox({ isActive = true, onActionExecuted, systemKey =
     if (isDeleteIntent) {
       resetComposer();
       triggerStructuredAction('delete_bom');
+      return;
+    }
+
+    const isBulkIntent = /^\s*(?:bulk\s*(?:copy|bom)?|batch\s*(?:copy|bom)?|excel|upload\s*excel|copy\s*excel)\s*$/i.test(text);
+    if (isBulkIntent) {
+      resetComposer();
+      triggerStructuredAction('bulk_bom_copy');
       return;
     }
 
@@ -668,7 +696,18 @@ export default function ChatBox({ isActive = true, onActionExecuted, systemKey =
           disabled={isLoading}
         >
           <Copy size={13} color="#0070f2" />
-          <span>Create BOM</span>
+          <span>Copy BOM</span>
+          <ArrowUpRight size={12} />
+        </button>
+        <button
+          type="button"
+          className="sap-chat-suggestion-chip"
+          onClick={() => triggerStructuredAction('bulk_bom_copy')}
+          disabled={isLoading}
+          style={{ background: '#f0fdf4', borderColor: '#bbf7d0', color: '#166534' }}
+        >
+          <FileSpreadsheet size={13} color="#16a34a" />
+          <span>Bulk Copy (Excel)</span>
           <ArrowUpRight size={12} />
         </button>
         <button
@@ -688,7 +727,7 @@ export default function ChatBox({ isActive = true, onActionExecuted, systemKey =
         <textarea
           ref={inputRef}
           className="sap-input sap-chat-textarea"
-          placeholder="Ask a question or type 'Create BOM' / 'Delete BOM'... (Press Enter to send, Shift+Enter for new line)"
+          placeholder="Ask a question or type 'Copy BOM', 'Bulk Copy', 'Delete BOM'... (Press Enter to send, Shift+Enter for new line)"
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -706,6 +745,13 @@ export default function ChatBox({ isActive = true, onActionExecuted, systemKey =
           <span>Send</span>
         </button>
       </div>
+
+      {/* Bulk BOM Copy Modal Dialog */}
+      <BulkBomCopyModal
+        isOpen={isBulkModalOpen}
+        onClose={() => setIsBulkModalOpen(false)}
+        onExecutionComplete={handleBulkExecutionComplete}
+      />
     </div>
   );
 }

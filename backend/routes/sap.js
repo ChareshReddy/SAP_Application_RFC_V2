@@ -6,15 +6,39 @@ import {
   getSelectedSapUser,
   setSelectedSapSessionId
 } from '../services/sapGuiClient.js';
+import { pingRfcServer } from '../services/sapRfcClient.js';
 
 const router = express.Router();
 
 /**
  * GET /api/sap/sessions
- * Returns all active SAP GUI sessions and the currently selected session.
+ * Returns all active SAP GUI or RFC sessions and the currently selected session.
  */
 router.get('/sessions', async (req, res) => {
   try {
+    const useRfc = process.env.SAP_BOM_MODE !== 'GUI' && process.env.USE_MOCK_SAP !== 'true';
+    if (useRfc) {
+      const rfcUser = process.env.SAP_RFC_USER || 'LEELAM_EXT';
+      return res.status(200).json({
+        success: true,
+        selectedSessionId: 'RFC_S4A',
+        selectedUser: rfcUser,
+        sessions: [
+          {
+            id: 'RFC_S4A',
+            system: 'S4A',
+            client: process.env.SAP_RFC_CLIENT || '500',
+            user: rfcUser,
+            mode: 'RFC/BAPI',
+            status: 'AVAILABLE',
+            selected: true
+          }
+        ],
+        status: 'AVAILABLE',
+        connected: true
+      });
+    }
+
     const health = await checkSapSessionHealth();
     const sessions = (health.sessions || []).map((s) => ({
       ...s,
@@ -38,14 +62,14 @@ router.get('/sessions', async (req, res) => {
       sessions: [],
       status: 'SERVER_UNAVAILABLE',
       connected: false,
-      message: `Failed to retrieve SAP GUI sessions: ${err.message}`
+      message: `Failed to retrieve SAP sessions: ${err.message}`
     });
   }
 });
 
 /**
  * POST /api/sap/sessions/select
- * Selects an active SAP GUI session to be used for all SAP operations.
+ * Selects an active SAP session to be used for SAP operations.
  */
 router.post('/sessions/select', async (req, res) => {
   try {
@@ -55,6 +79,16 @@ router.post('/sessions/select', async (req, res) => {
         success: false,
         code: 'INVALID_SESSION_ID',
         message: 'A valid sessionId string is required.'
+      });
+    }
+
+    if (sessionId === 'RFC_S4A') {
+      const rfcUser = process.env.SAP_RFC_USER || 'LEELAM_EXT';
+      return res.status(200).json({
+        success: true,
+        selectedSessionId: 'RFC_S4A',
+        selectedUser: rfcUser,
+        message: `Active session set to RFC/BAPI (${rfcUser}).`
       });
     }
 
@@ -100,10 +134,41 @@ router.post('/sessions/select', async (req, res) => {
 
 /**
  * GET /api/sap/session-status
- * Health check endpoint for dynamic SAP GUI session monitoring.
+ * Health check endpoint for dynamic SAP RFC or GUI session monitoring.
  */
 router.get('/session-status', async (req, res) => {
   try {
+    const useRfc = process.env.SAP_BOM_MODE !== 'GUI' && process.env.USE_MOCK_SAP !== 'true';
+    if (useRfc) {
+      const ping = await pingRfcServer();
+      const rfcUser = process.env.SAP_RFC_USER || 'LEELAM_EXT';
+      return res.status(200).json({
+        connected: ping.success,
+        mode: 'RFC',
+        status: ping.success ? 'AVAILABLE' : 'SERVER_UNAVAILABLE',
+        system: 'S4A',
+        client: process.env.SAP_RFC_CLIENT || '500',
+        user: rfcUser,
+        selectedUser: rfcUser,
+        message: ping.success ? `SAP RFC Online (${ping.latencyMs}ms)` : ping.message,
+        latencyMs: ping.latencyMs,
+        selectedSessionId: 'RFC_S4A',
+        sessions: ping.success
+          ? [
+              {
+                id: 'RFC_S4A',
+                system: 'S4A',
+                client: process.env.SAP_RFC_CLIENT || '500',
+                user: rfcUser,
+                mode: 'RFC/BAPI',
+                status: 'AVAILABLE',
+                selected: true
+              }
+            ]
+          : []
+      });
+    }
+
     const health = await checkSapSessionHealth();
     return res.status(200).json(health);
   } catch (err) {
